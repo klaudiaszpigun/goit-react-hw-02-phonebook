@@ -1,9 +1,16 @@
 import { Component } from 'react';
+
 export class ContactForm extends Component {
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.saveState();
+  };
+
   render() {
-    const { saveName, saveNumber, saveState } = this.props;
+    const { saveName, saveNumber } = this.props;
+
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         <p>Name</p>
         <input
           type="text"
@@ -22,10 +29,8 @@ export class ContactForm extends Component {
           onChange={saveNumber}
           required
         />
-        <button type="button" onClick={() => saveState()}>
-          Add Contact
-        </button>
-      </div>
+        <button type="submit">Add Contact</button>
+      </form>
     );
   }
 }

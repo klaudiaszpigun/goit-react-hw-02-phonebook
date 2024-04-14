@@ -12,14 +12,14 @@ export class App extends Component {
     number: '',
   };
 
-  saveToState = () => {
+  saveToState = event => {
     if (
       !this.state.contacts.some(
         contact =>
           contact.name === this.state.name ||
           contact.number === this.state.number
-      ) ||
-      this.state.name.trim() !== '' ||
+      ) &&
+      this.state.name.trim() !== '' &&
       this.state.number.trim() !== ''
     ) {
       this.setState({
@@ -27,23 +27,22 @@ export class App extends Component {
           ...this.state.contacts,
           { id: nanoid(), name: this.state.name, number: this.state.number },
         ],
-        name: '',
-        number: '',
       });
     } else {
       alert(`User is already in contacts`);
+      this.setState({ name: '', number: '' });
     }
   };
 
   saveToName = event => {
     if (event.target.value.trim() !== '') {
-      this.setState({ name: event.target.value });
+      this.setState({ name: event.target.value.trim() });
     }
   };
 
   saveToNumber = event => {
     if (event.target.value.trim() !== '') {
-      this.setState({ number: event.target.value });
+      this.setState({ number: event.target.value.trim() });
     }
   };
 
