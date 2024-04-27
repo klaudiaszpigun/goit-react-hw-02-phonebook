@@ -12,21 +12,6 @@ export class App extends Component {
     number: '',
   };
 
-  componentDidMount() {
-    // Pobierz dane z local storage po załadowaniu komponentu
-    const contactsFromStorage = localStorage.getItem('contacts');
-    if (contactsFromStorage) {
-      this.setState({ contacts: JSON.parse(contactsFromStorage) });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // Zapisz dane w local storage po aktualizacji stanu
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
-
   saveToState = event => {
     if (
       !this.state.contacts.some(
@@ -37,14 +22,12 @@ export class App extends Component {
       this.state.name.trim() !== '' &&
       this.state.number.trim() !== ''
     ) {
-      this.setState(prevState => ({
+      this.setState({
         contacts: [
-          ...prevState.contacts,
-          { id: nanoid(), name: prevState.name, number: prevState.number },
+          ...this.state.contacts,
+          { id: nanoid(), name: this.state.name, number: this.state.number },
         ],
-        name: '',
-        number: '',
-      }));
+      });
     } else {
       alert(`User is already in contacts`);
       this.setState({ name: '', number: '' });
